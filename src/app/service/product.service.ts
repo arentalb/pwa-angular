@@ -17,4 +17,10 @@ export class ProductService {
   getProductById(id :number){
     return this.http.get<Product>("http://localhost:7000/products/"+id)
   }
+  addProduct(product :Product){
+    return this.http.post("http://localhost:7000/products",product).subscribe(()=>{
+      console.log("product added ")
+    })
+
+  }
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {ProductService} from "../service/product.service";
+import {Product} from "../product";
 
 @Component({
   selector: 'app-add-product',
@@ -8,7 +10,16 @@ import {NgForm} from "@angular/forms";
 })
 export class AddProductComponent {
 
-  onSubmit(form :NgForm){
-    console.log(form.value)
+  constructor(private productService :ProductService) {
   }
+  onSubmit(form :NgForm){
+    const product :Product ={
+      name : form.value.name,
+      price : form.value.price,
+      psc : form.value.psc,
+    }
+
+    this.productService.addProduct(product)
+  }
+
 }
