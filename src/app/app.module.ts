@@ -6,17 +6,26 @@ import { HeaderComponent } from './header/header.component';
 import { AllProductComponent } from './all-product/all-product.component';
 import { ProductComponent } from './product/product.component';
 import { HttpClientModule} from "@angular/common/http";
+import {RouterModule} from "@angular/router";
+import { HomeComponent } from './home/home.component';
 
+const routers =[
+  {path :"" , component : HomeComponent},
+  {path :"allproducts" , component : AllProductComponent},
+
+]
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     AllProductComponent,
-    ProductComponent
+    ProductComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routers)
   ],
   providers: [],
   bootstrap: [AppComponent]
