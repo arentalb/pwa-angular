@@ -1,0 +1,12 @@
+<div class="bg-gray-100 ">
+  <div class="pt-5 flex justify-center items-center flex-col">
+    <p class="text-2xl">this is all product you have in the database </p>
+    <div class="mt-10 flex flex-wrap">
+
+      <div *ngFor="let pro of products">
+        <app-product [myProduct]="pro"></app-product>
+
+      </div>
+    </div>
+  </div>
+</div>
