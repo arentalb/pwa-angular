@@ -8,10 +8,13 @@ import { ProductComponent } from './product/product.component';
 import { HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import { HomeComponent } from './home/home.component';
+import { OneProductComponent } from './one-product/one-product.component';
+import {FormsModule} from "@angular/forms";
 
 const routers =[
   {path :"" , component : HomeComponent},
   {path :"allproducts" , component : AllProductComponent},
+  {path :"oneproduct" , component : OneProductComponent},
 
 ]
 @NgModule({
@@ -20,12 +23,14 @@ const routers =[
     HeaderComponent,
     AllProductComponent,
     ProductComponent,
-    HomeComponent
+    HomeComponent,
+    OneProductComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routers)
+    RouterModule.forRoot(routers),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

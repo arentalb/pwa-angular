@@ -9,8 +9,12 @@ export class ProductService {
 
   constructor(private http :HttpClient) { }
 
-  
+
   getAllProducts (){
     return this.http.get<Product[]>("http://localhost:7000/products")
+  }
+
+  getProductById(id :number){
+    return this.http.get<Product>("http://localhost:7000/products/"+id)
   }
 }
