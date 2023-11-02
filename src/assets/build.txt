@@ -1,0 +1,7 @@
+
+PS C:\Users\Click\Documents\angular\code\pwa> ng build --configuration=production
+PS C:\Users\Click\Documents\angular\code\pwa> cd dist/pwa
+PS C:\Users\Click\Documents\angular\code\pwa\dist\pwa> http-server 8089 -c-1 --proxy http://localhost:9000
+
+
+ http://127.0.0.1:8081
