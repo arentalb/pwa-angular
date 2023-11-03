@@ -44,11 +44,16 @@ export class DexieService {
       console.log("product added to the new product database ")
     });
   }
-
+  async isThereAnyNewData() {
+    const count:number = await this.db.table('storeNewProducts').count();
+    console.log("number of unsynced data " + count)
+    return count > 0;
+  }
   deleteAllPrducts(){
     this.db.table("storeProducts").clear()
   }
   deleteAllNewPrducts(){
+    console.log(" all products is deleted inside the dexie service ")
     this.db.table("storeNewProducts").clear()
 
   }

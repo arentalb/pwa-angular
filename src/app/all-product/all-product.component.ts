@@ -29,11 +29,38 @@ export class AllProductComponent implements OnInit{
     }
   }
   getAllProducts (){
-    this.syncData().then(()=>{
-      this.productService.getAllProducts().subscribe((allProducts)=>{
+      this.dexieService.isThereAnyNewData().then((check)=>{
+        if (check){
+          let accept  = confirm('Do you want to sync data?');
+          if (accept){
+            this.syncAndFetch()
+          }else {
+            this.onlyFetch()
+          }
+        }else {
+          this.onlyFetch()
+        }
+      })
+
+  }
+
+  onlyFetch(){
+    this.productService.getAllProducts().subscribe((allProducts) => {
+      console.log('Products fetched from Server');
+      this.products = allProducts
+      this.addProductsToDexie(allProducts)
+    })
+    console.log('Data sync cancelled by user.');
+  }
+  syncAndFetch(){
+    console.log("user wants to sync ")
+    this.syncData().then(() => {
+      this.productService.getAllProducts().subscribe((allProducts) => {
         console.log('Products fetched from Server');
         this.products = allProducts
         this.addProductsToDexie(allProducts)
+        this.dexieService.deleteAllNewPrducts()
+
       })
     })
   }
