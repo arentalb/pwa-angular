@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from "../product";
 import {ProductService} from "../service/product.service";
 import {DexieService} from "../service/dexie/dexie.service";
+import {SyncService} from "../service/dexie/sync.service";
 
 @Component({
   selector: 'app-all-product',
@@ -11,7 +12,7 @@ import {DexieService} from "../service/dexie/dexie.service";
 export class AllProductComponent implements OnInit{
   products :Product[] = []
 
-  constructor(private productService :ProductService , private dexieService: DexieService) {
+  constructor(private productService :ProductService , private dexieService: DexieService ,private syncService :SyncService) {
   }
 
   ngOnInit(): void {
@@ -28,10 +29,12 @@ export class AllProductComponent implements OnInit{
     }
   }
   getAllProducts (){
-    this.productService.getAllProducts().subscribe((allProducts)=>{
-      console.log('Products fetched from Server');
-      this.products = allProducts
-      this.addProductsToDexie(allProducts)
+    this.syncData().then(()=>{
+      this.productService.getAllProducts().subscribe((allProducts)=>{
+        console.log('Products fetched from Server');
+        this.products = allProducts
+        this.addProductsToDexie(allProducts)
+      })
     })
   }
   getProductFromDexie() {
@@ -51,5 +54,9 @@ export class AllProductComponent implements OnInit{
   }
   deleteAllPrdouctsFromDexie(){
     this.dexieService.deleteAllPrducts()
+  }
+
+  syncData(){
+    return this.syncService.sync();
   }
 }

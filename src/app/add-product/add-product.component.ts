@@ -33,7 +33,9 @@ export class AddProductComponent {
   }
 
   private addProductToServer(product :Product) {
-    this.productService.addProduct(product)
+    this.productService.addProduct(product).subscribe(()=>{
+      console.log("product added to the server ")
+    })
     this.dexieService.addNewProductToProductDatabase(product)
 
   }

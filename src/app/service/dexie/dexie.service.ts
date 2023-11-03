@@ -48,4 +48,8 @@ export class DexieService {
   deleteAllPrducts(){
     this.db.table("storeProducts").clear()
   }
+  deleteAllNewPrducts(){
+    this.db.table("storeNewProducts").clear()
+
+  }
 }
