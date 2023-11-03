@@ -18,11 +18,9 @@ export class DexieService {
 
     this.db.version(1).stores({
       storeProducts: '++id, name, price, psc',
-    });
-    this.db.version(1).stores({
       storeNewProducts: '++id, name, price, psc',
-    });
 
+    });
 
   }
   async getAllProducts() {
@@ -35,8 +33,16 @@ export class DexieService {
   async addAllProducts(products: Product[]) {
     return this.db.table('storeProducts').bulkAdd(products);
   }
-  async addAllNewProducts(products: Product[]) {
-    return this.db.table('storeNewProducts').bulkAdd(products);
+
+  async addNewProductToProductDatabase(products: Product) {
+    return this.db.table('storeProducts').add(products).then(()=>{
+      console.log("product added to the product database ")
+    });
+  }
+  async addNewProductToNewProductDatabase(products: Product) {
+    return this.db.table('storeNewProducts').add(products).then(()=>{
+      console.log("product added to the new product database ")
+    });
   }
 
   deleteAllPrducts(){
