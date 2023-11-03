@@ -1,0 +1,11 @@
+Open your project in WebStorm.
+
+Go to the "Run" menu at the top, then select "Edit Configurations."
+
+Click the "+" button and choose "Shell Script."
+
+In the "Name" field, give your configuration a name
+
+In the "Script" field, enter the full path to your script, including the script name, such as C:\Users\Click\Documents\angular\code\pwa\run-app.bat
+
+Set the "Working directory" to the directory where your Angular project is located, such as C:/Users/Click/Documents/angular/code/pwa
