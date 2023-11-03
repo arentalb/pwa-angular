@@ -9,10 +9,10 @@ export class SyncService {
 
   constructor(private dexieService: DexieService, private productService: ProductService) {
   }
-  async sync() {
+  async syncData() {
     if (navigator.onLine) {
       console.log('User is online');
-      console.log("Starting data synchronization")
+      console.log("Starting data synchronization");
       const offlineProducts = await this.dexieService.getAllNewProducts();
       const transformedProducts = offlineProducts.map((product) => {
         return {
@@ -25,14 +25,11 @@ export class SyncService {
       let completed = 0;
 
       for (const product of transformedProducts) {
-        this.productService.addProduct(product)
-        .subscribe(() => {
-          completed++;
-          const progress = Math.floor((completed / totalProducts) * 100);
-          console.log(`Sync Progress: ${progress}%`);
-        });
+        await this.productService.addProduct(product).toPromise();
+        completed++;
+        const progress = Math.floor((completed / totalProducts) * 100);
+        console.log(`Sync Progress: ${progress}%`);
       }
-      console.log("all product in storeNewProducts deleted ")
     }
-  }
+    }
 }

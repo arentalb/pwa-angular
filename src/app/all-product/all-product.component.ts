@@ -9,10 +9,10 @@ import {SyncService} from "../service/dexie/sync.service";
   templateUrl: './all-product.component.html',
   styleUrls: ['./all-product.component.css']
 })
-export class AllProductComponent implements OnInit{
-  products :Product[] = []
+export class AllProductComponent implements OnInit {
+  products: Product[] = []
 
-  constructor(private productService :ProductService , private dexieService: DexieService ,private syncService :SyncService) {
+  constructor(private productService: ProductService, private dexieService: DexieService, private syncService: SyncService) {
   }
 
   ngOnInit(): void {
@@ -28,23 +28,24 @@ export class AllProductComponent implements OnInit{
       this.getProductFromDexie()
     }
   }
-  getAllProducts (){
-      this.dexieService.isThereAnyNewData().then((check)=>{
-        if (check){
-          let accept  = confirm('Do you want to sync data?');
-          if (accept){
-            this.syncAndFetch()
-          }else {
-            this.onlyFetch()
-          }
-        }else {
+
+  getAllProducts() {
+    this.dexieService.isThereAnyNewData().then((check) => {
+      if (check) {
+        let accept = confirm('Do you want to sync data?');
+        if (accept) {
+          this.syncAndFetch()
+        } else {
           this.onlyFetch()
         }
-      })
+      } else {
+        this.onlyFetch()
+      }
+    })
 
   }
 
-  onlyFetch(){
+  onlyFetch() {
     this.productService.getAllProducts().subscribe((allProducts) => {
       console.log('Products fetched from Server');
       this.products = allProducts
@@ -52,18 +53,19 @@ export class AllProductComponent implements OnInit{
     })
     console.log('Data sync cancelled by user.');
   }
-  syncAndFetch(){
-    console.log("user wants to sync ")
-    this.syncData().then(() => {
+
+  syncAndFetch() {
+    console.log("User wants to sync");
+    this.syncService.syncData().then(() => {
       this.productService.getAllProducts().subscribe((allProducts) => {
         console.log('Products fetched from Server');
-        this.products = allProducts
-        this.addProductsToDexie(allProducts)
-        this.dexieService.deleteAllNewPrducts()
-
-      })
-    })
+        this.products = allProducts;
+        this.addProductsToDexie(allProducts);
+        this.dexieService.deleteAllNewPrducts();
+      });
+    });
   }
+
   getProductFromDexie() {
     this.dexieService.getAllProducts().then((data) => {
       console.log('Products fetched from Dexie');
@@ -83,7 +85,4 @@ export class AllProductComponent implements OnInit{
     this.dexieService.deleteAllPrducts()
   }
 
-  syncData(){
-    return this.syncService.sync();
-  }
 }
